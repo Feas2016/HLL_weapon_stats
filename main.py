@@ -6,13 +6,14 @@ import os
 
 
 def main():
+    export_name = 'HLL_weapon-stats.csv'
     sg.theme('GreenTan')  # GUI
     layout = [[sg.Text('Select the .TXT file to process')],
               [sg.Text('Path to File'), sg.Input(
                   # 'F:/Programming/HLL_stats/log-file.txt'
               ), sg.FileBrowse('View')],
               [sg.OK(), sg.Quit('Exit')]]
-    window = sg.Window('HLL Stats from logs', layout)
+    window = sg.Window('HLL Weapon Stats from logs', layout)
     while True:
         event, values = window.read()
         if event in (sg.WIN_CLOSED, 'Exit'):
@@ -29,12 +30,12 @@ def main():
                 else:
                     while True:  # Test opened file
                         try:
-                            with open("HLL_stats.csv", mode="w",
+                            with open(export_name, mode="w",
                                       encoding='utf-8-sig') as w_file:
                                 break
                         except:
                             sg.popup(
-                                'Pls close /HLL_stats.csv file to continue')
+                                f'Pls close /{export_name} file to continue')
                     window.close()
                     break
     nick_list = []
@@ -45,25 +46,34 @@ def main():
     # parsing file
     with io.open(path, encoding='utf-8') as file:
         for line in file:
-            if '\n' not in line:    # fix last symbol
-                line += '\n'
-            # print(line)
-            line = re.sub(r'(.*)KILL                ', '', line)
-            nickname_kill = line[:line.find(') -> ')]
-            nickname_kill = nickname_kill[:nickname_kill.find('Allies/')]
-            nickname_kill = nickname_kill[:nickname_kill.find('(Axis/')]
-            nickname_death = re.sub(r'(.*) -> ', '', line)
-            nickname_death = nickname_death[:nickname_death.find(') with ')]
-            nickname_death = nickname_death[:nickname_death.find('Allies/')]
-            nickname_death = nickname_death[:nickname_death.find('(Axis/')]
-            weapon = re.sub(r'(.*)\) with ', '', line)
-            weapon = weapon[:weapon.find('\n')].replace('None', 'Tank/Arty')
+            if 'CHAT[' not in line:
+                if 'CONNECTED' not in line:
+                    if 'TEAM KILL' not in line:
+                        if '\n' not in line:    # fix last symbol
+                            line += '\n'
+                        # print(line)
+                        line = re.sub(r'(.*)KILL                ', '', line)
+                        nickname_kill = line[:line.find(') -> ')]
+                        nickname_kill = nickname_kill[:nickname_kill.find(
+                            'Allies/')]
+                        nickname_kill = nickname_kill[:nickname_kill.find(
+                            '(Axis/')]
+                        nickname_death = re.sub(r'(.*) -> ', '', line)
+                        nickname_death = nickname_death[:nickname_death.find(
+                            ') with ')]
+                        nickname_death = nickname_death[:nickname_death.find(
+                            'Allies/')]
+                        nickname_death = nickname_death[:nickname_death.find(
+                            '(Axis/')]
+                        weapon = re.sub(r'(.*)\) with ', '', line)
+                        weapon = weapon[:weapon.find('\n')].replace(
+                            'None', 'Tank/Arty')
 
-            list = [nickname_kill, nickname_death, weapon]
-            # it often happens that a person did not kill anyone
-            nick_list += [nickname_death]   #
-            weapon_list += [weapon]
-            log += (list,)
+                        list = [nickname_kill, nickname_death, weapon]
+                        # it often happens that a person did not kill anyone
+                        nick_list += [nickname_death]   #
+                        weapon_list += [weapon]
+                        log += (list,)
     # print(log)
 
     # nick_list & weapon_list
@@ -85,7 +95,7 @@ def main():
     tbl_label.extend(weapon_list)
 
     # count in log
-    with open("HLL_stats.csv", mode="w", encoding='utf-8-sig') as w_file:
+    with open(export_name, mode="w", encoding='utf-8-sig') as w_file:
         file_writer = csv.writer(w_file, delimiter=";", lineterminator="\r",
                                  quoting=csv.QUOTE_NONE, quotechar='',
                                  escapechar=' ')
@@ -123,7 +133,7 @@ def main():
                  best_gun, row])
             print(i + 1, nick, kills, deaths, weapon_list[pos_best_gun],
                   best_gun, row)
-    os.startfile("HLL_stats.csv")
+    os.startfile(export_name)
 
 
 if __name__ == '__main__':
