@@ -5,7 +5,7 @@ cd /f/Programming/HLL_stats/
 git add *
 #git show
 git status #
-git commit -m "0.3b"
+git commit -m "0.3c"
 git push -u master
 git log --name-status
 $SHELL
