@@ -9,4 +9,4 @@ pysimplegui = "4.33.0"
 [dev-packages]
 
 [requires]
-python_version = "3.8.3"
+python_version = "3.9.1"

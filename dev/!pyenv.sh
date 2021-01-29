@@ -7,5 +7,5 @@ pipenv run python main.py
 #pipenv lock -r > requirements.txt
 pipenv run pip freeze > requirements.txt
 pipenv lock
-#pyinstaller --onefile --noconsole main.py
+pyinstaller --onefile --noconsole main.py
 sleep 5

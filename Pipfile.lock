@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2a584878ca19b156118bdf289ff2e008b2ff507d9fe13ca90ea9ecc103947951"
+            "sha256": "31ae3a0acea9aef90e0d9966339c3361d0f3ccb5fb4f40ce5b4575cdc8b6d562"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.8.3"
+            "python_version": "3.9.1"
         },
         "sources": [
             {
@@ -18,11 +18,11 @@
     "default": {
         "pysimplegui": {
             "hashes": [
-                "sha256:54476526654dfc57057fc7d8cb202308e19ca0161d88d94c0313a1845130b8ee",
-                "sha256:a4889564bd55d01bd7c9fe7faa18d3512318003351ebd83ace8da0d83594c847"
+                "sha256:1169d3434137242eca2c95ca13ec21de398990563e8f58a10b581ebd127b13cd",
+                "sha256:b7b986512d77bf50a92207579bed4cf7f2f287ce14a82f4b57c5f368bca54c9c"
             ],
             "index": "pypi",
-            "version": "==4.33.0"
+            "version": "==4.34.0"
         }
     },
     "develop": {}
